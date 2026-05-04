@@ -29,9 +29,9 @@ cs & s^2 & -cs & -s^2 \\
 -cs & -s^2 & cs & s^2 \end{bmatrix} $$
 
 This matrix is calculated in the script using the differences in nodal coordinates to avoid calculating the actual angle:
-           *   $L = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}$
-           *   $c = (x_2 - x_1) / L$
-           *   $s = (y_2 - y_1) / L$
+&emsp *   $L = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}$
+&emsp *   $c = (x_2 - x_1) / L$
+&emsp *   $s = (y_2 - y_1) / L$
 
 ### 2. Global Matrix Assembly
 The global stiffness matrix $\mathbf{K}$ defines the entire structure. If the structure has $N$ nodes, the global matrix is of size $2N \times 2N$.
