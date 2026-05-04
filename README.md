@@ -23,12 +23,15 @@ A 2D element has 2 nodes, and each node has 2 DOFs ($X$ and $Y$), resulting in a
 
 The geometric transformation matrix $\mathbf{T}$ relates global displacements to local axial stretching. Multiplying $\mathbf{T}^T \mathbf{k}_{local} \mathbf{T}$ yields the **Transformed Element Stiffness Matrix ($\mathbf{K}_e$)**:
 
-$$ \mathbf{K}_e = \frac{AE}{L} \begin{bmatrix} c^2 & cs & -c^2 & -cs \\ cs & s^2 & -cs & -s^2 \\ -c^2 & -cs & c^2 & cs \\ -cs & -s^2 & cs & s^2 \end{bmatrix} $$
+$$ \mathbf{K}_e = \frac{AE}{L} \begin{bmatrix} c^2 & cs & -c^2 & -cs \\ 
+cs & s^2 & -cs & -s^2 \\ 
+-c^2 & -cs & c^2 & cs \\ 
+-cs & -s^2 & cs & s^2 \end{bmatrix} $$
 
 This matrix is calculated in the script using the differences in nodal coordinates to avoid calculating the actual angle:
-*   $L = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}$
-*   $c = (x_2 - x_1) / L$
-*   $s = (y_2 - y_1) / L$
+  *   $L = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}$
+  *   $c = (x_2 - x_1) / L$
+  *   $s = (y_2 - y_1) / L$
 
 ### 2. Global Matrix Assembly
 The global stiffness matrix $\mathbf{K}$ defines the entire structure. If the structure has $N$ nodes, the global matrix is of size $2N \times 2N$.
@@ -38,7 +41,10 @@ For each element, we find its global DOFs (e.g., Node 1 uses DOFs `[2, 3]`, Node
 ### 3. Boundary Conditions & Matrix Partitioning
 Before solving $\mathbf{K} \mathbf{U} = \mathbf{F}$, we must prevent the structure from flying away by applying boundary conditions (supports). We partition the matrices into **Free** ($f$) DOFs and **Fixed** ($p$) DOFs:
 
-$$ \begin{bmatrix} \mathbf{K}_{ff} & \mathbf{K}_{fp} \\ \mathbf{K}_{pf} & \mathbf{K}_{pp} \end{bmatrix} \begin{bmatrix} \mathbf{U}_f \\ \mathbf{U}_p \end{bmatrix} = \begin{bmatrix} \mathbf{F}_f \\ \mathbf{F}_p \end{bmatrix} $$
+$$ \begin{bmatrix} \mathbf{K}_{ff} & \mathbf{K}_{fp} \\ 
+\mathbf{K}_{pf} & \mathbf{K}_{pp} \end{bmatrix} \begin{bmatrix} \mathbf{U}_f \\ 
+\mathbf{U}_p \end{bmatrix} = \begin{bmatrix} \mathbf{F}_f \\ 
+\mathbf{F}_p \end{bmatrix} $$
 
 Since our wall supports don't move, $\mathbf{U}_p = \mathbf{0}$. We extract the sub-matrix $\mathbf{K}_{ff}$ and the known force vector $\mathbf{F}_f$ to solve for the unknown displacements.
 
